@@ -6,12 +6,11 @@ TIMEOUT="${TIMEOUT:-5}"
 
 if [[ -z "${APP_URL}" ]]; then
   echo "APP-probe: no APP_URL set." >&2
-  echo "Usage: APP_URL=http://example.com/c/<token> $0" >&2
+  echo "Usage: APP_URL=http://example.com/<token> $0" >&2
   exit 3
 fi
 
-echo "=== AUTHORIZED RED-TEAM REACHABILITY TEST ===" >&2
-echo "GET ${APP_URL}" >&2
+
 PARAMS=()
 
 while IFS='=' read -r key value; do
@@ -24,8 +23,6 @@ response="$(curl -sS -m "${TIMEOUT}" \
   -w '\n%{http_code}' \
   "${APP_URL}")"
 
-echo "=== RESPONSE ===" >&2
-echo "${response}" >&2
 status="${response##*$'\n'}"
 body="${response%$'\n'*}"
 
