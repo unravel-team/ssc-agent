@@ -1,0 +1,12 @@
+{
+  "name": "ssc-local",
+  "description": "Supply-chain scanner plugins, installed from this folder.",
+  "owner": { "name": "Unravel" },
+  "plugins": [
+    {
+      "name": "ssc-advisor",
+      "source": "./ssc-advisor",
+      "description": "Get the supply-chain advisory for a folder and apply the fixes you approve."
+    }
+  ]
+}

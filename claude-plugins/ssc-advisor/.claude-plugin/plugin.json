@@ -1,0 +1,13 @@
+{
+  "name": "ssc-advisor",
+  "version": "0.9.2",
+  "description": "Get the supply-chain advisory for a folder from the SSC advisory API and apply the fixes you approve.",
+  "author": {
+    "name": "Unravel"
+  },
+  "keywords": [
+    "security",
+    "supply-chain",
+    "dependencies"
+  ]
+}

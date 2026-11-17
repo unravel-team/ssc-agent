@@ -1,0 +1,19 @@
+[package]
+name = "ssc"
+version = "0.1.0"
+edition = "2021"
+description = "Laptop supply-chain scanner: scans folders, sends what it finds to the sources API, shows the advisory and action plan."
+publish = false
+
+# Kept deliberately small (this is a supply-chain security tool): JSON and regexes only, pinned exactly.
+# HTTPS goes through the system's curl; certificates are parsed by our own code (src/certs.rs); the key is a
+# file only this user can read (~/.ssc/key); background scans use launchd, a systemd user timer or schtasks.
+[dependencies]
+serde_json = { version = "=1.0.154", features = ["preserve_order"] }
+regex = { version = "=1.13.1", default-features = false, features = ["std", "unicode", "perf"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ssc-token" content="{{TOKEN}}">
+<title>Supply-chain scanner</title>
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo" aria-hidden="true"></span>Supply-chain scanner</div>
+  <div class="top-actions">
+    <span id="server" class="server" title="The company server that checks your scans"><span class="dot"></span><span class="label">Server</span></span>
+    <span class="divider" aria-hidden="true"></span>
+    <label class="switch" title="Scan your folders automatically in the background">
+      <input type="checkbox" id="auto" role="switch"><span class="track"><span class="thumb"></span></span><span>Auto-scan</span>
+    </label>
+    <select id="interval" aria-label="How often to auto-scan"></select>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" aria-label="Folders">
+    <div class="side-head">
+      <span>Folders</span>
+      <button id="scan-all" type="button" class="link">Scan all</button>
+    </div>
+    <nav id="folders" class="folder-list"></nav>
+    <form id="add-folder" class="add" autocomplete="off">
+      <input name="path" placeholder="Add a folder, e.g. ~/code" aria-label="Folder path" required>
+      <button type="submit" aria-label="Add folder">Add</button>
+    </form>
+    <p id="side-msg" class="side-msg" role="status"></p>
+  </aside>
+
+  <main id="main" class="main" aria-live="polite"></main>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
