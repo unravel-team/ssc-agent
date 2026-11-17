@@ -1,0 +1,60 @@
+[project]
+name = "intel-api"
+version = "0.1.0"
+description = "SSC sources API: collects supply-chain security signals for a scope, stores them and serves lookups."
+requires-python = ">=3.9"
+# The core (store, jobs, sources, the agents' client and the tests) needs only the Python standard library and SQLite.
+# Serving the API needs the `server` group below.
+dependencies = []
+
+[tool.poetry]
+# Dependency management only: the service runs from this folder (python -m intel_api), it is not built as a package.
+package-mode = false
+
+# The server: FastAPI + uvicorn serve the API, Postgres stores the data (psycopg). Installed by the Dockerfile with
+# `poetry install --only server` (Python 3.11+; the image runs 3.13). Laptops and the tests need none of it.
+# Every version here and in poetry.lock was checked with the dependency gatekeeper (all ALLOW).
+[tool.poetry.group.server]
+optional = true
+
+[tool.poetry.group.server.dependencies]
+fastapi = { version = "0.162.0", python = ">=3.11" }
+uvicorn = { version = "0.54.0", python = ">=3.11" }
+psycopg = { version = "3.3.6", extras = ["binary"], python = ">=3.11" }
+# Pinned below their newest release, which was under a week old when locked (cooling-off); lift them on the next update.
+pydantic = { version = "2.14.1", python = ">=3.11" }
+pydantic-core = { version = "2.50.1", python = ">=3.11" }
+anyio = { version = "4.15.1", python = ">=3.11" }
+typing-inspection = { version = "0.4.4", python = ">=3.11" }
+opentelemetry-api = { version = "1.45.1", python = ">=3.11" }
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# Lint + format: `ruff check intel_api tests && ruff format --check intel_api tests` (tests/ruff.toml extends this).
+[tool.ruff]
+line-length = 120
+target-version = "py39"          # the stdlib-only core (store, jobs, sources, client, tests) runs on Python 3.9+
+
+[tool.ruff.lint]
+select = [
+    "E", "W", "F",               # pycodestyle, pyflakes
+    "I",                         # import order
+    "B",                         # bugbear
+    "UP",                        # pyupgrade (for 3.9)
+    "SIM",                       # simplifications
+    "C4",                        # comprehensions
+    "PIE",                       # misc. lints
+    "BLE",                       # blind `except Exception`: each one must log, re-raise or say why (noqa)
+    "RUF",                       # ruff's own
+]
+ignore = [
+    "E501",                      # line length is the formatter's job; long string literals and URLs stay as they are
+    "RUF001", "RUF003",          # curly quotes and dashes are deliberate (the text patterns match them in news titles)
+    "SIM108",                    # ternaries are not always clearer than an if/else
+    "SIM905",                    # word lists read better as one string .split() than as hundreds of literals
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["intel_api"]

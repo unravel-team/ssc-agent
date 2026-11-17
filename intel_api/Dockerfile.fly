@@ -1,0 +1,42 @@
+# Fly.io image: the API and the agents on one machine (the org's machine limit), started by fly_start.py.
+# Docker Compose keeps them apart: Dockerfile (API) and agents/Dockerfile. Build context: this folder.
+ARG PYTHON_IMAGE=python:3.13.18-slim@sha256:ae14d4ce8771606477a81446e7ef429edd6762305fc50c84507c1041fa8285d1
+
+# ---------------------------------------------------------------- the API's dependencies (as in Dockerfile)
+FROM ${PYTHON_IMAGE} AS build
+ENV PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    POETRY_NO_INTERACTION=1 POETRY_VIRTUALENVS_CREATE=false POETRY_CACHE_DIR=/tmp/poetry-cache
+COPY poetry-tools.txt /tmp/poetry-tools.txt
+RUN python -m venv /opt/poetry \
+ && /opt/poetry/bin/pip install --require-hashes --only-binary=:all: --no-deps -r /tmp/poetry-tools.txt
+WORKDIR /src
+COPY pyproject.toml poetry.lock ./
+RUN /opt/poetry/bin/poetry check --lock \
+ && python -m venv /venv \
+ && VIRTUAL_ENV=/venv PATH=/venv/bin:$PATH /opt/poetry/bin/poetry install --only server --no-root
+
+# ---------------------------------------------------------------- Claude Code: one pinned release, checksum-verified (as in agents/Dockerfile)
+FROM ${PYTHON_IMAGE} AS claude
+ARG CLAUDE_VERSION=2.1.316
+ARG CLAUDE_SHA256_X64=fd13c70000fec3f2116dfbcbb6121210b4a29328bf0e46210a59dd594a67d824
+ARG CLAUDE_SHA256_ARM64=55cdb8e162d190432696ea54010e0fca2e18d06fa7a7127fd563b9ffd4f22624
+ARG TARGETARCH
+COPY agents/fetch_claude.py /tmp/fetch_claude.py
+RUN python /tmp/fetch_claude.py "$CLAUDE_VERSION" "$TARGETARCH" "$CLAUDE_SHA256_X64" "$CLAUDE_SHA256_ARM64" /claude
+
+# ---------------------------------------------------------------- runtime
+FROM ${PYTHON_IMAGE}
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PATH=/venv/bin:$PATH
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends wamerican \
+ && rm -rf /var/lib/apt/lists/* \
+ && useradd --system --uid 10001 --no-create-home --shell /usr/sbin/nologin intel \
+ && useradd --system --uid 10002 --home-dir /home/agent --shell /usr/sbin/nologin agent \
+ && mkdir -p /work /home/agent && chown agent:agent /work /home/agent
+COPY --from=build /venv /venv
+COPY --from=claude /claude /usr/local/bin/claude
+WORKDIR /app
+COPY --chown=root:root . /app/intel_api
+COPY --chown=root:root agents/runner.py agents/advisor.md /agents/
+# The start script runs as root only to start the two processes as their own users.
+CMD ["python", "/app/intel_api/fly_start.py"]

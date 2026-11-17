@@ -1,0 +1,36 @@
+# Fly.io app for the sources API and the agents, on one machine (Dockerfile.fly, started by fly_start.py).
+# How to deploy: FLY.md. One machine, always on: the background collection jobs and the scan worker run inside the API
+# process, and claiming scans assumes a single process. Don't let Fly stop it when idle, and don't scale it past one.
+app = "unravel-ssc-api"
+primary_region = "sin"            # Singapore: the closest Fly region (fly platform regions)
+
+[build]
+  dockerfile = "Dockerfile.fly"
+
+[processes]
+  # the API (listening on IPv6 and IPv4) and the agents, each as its own user with only its own secrets
+  app = "python /app/intel_api/fly_start.py"
+
+[http_service]
+  processes = ["app"]
+  internal_port = 8787
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 50
+    hard_limit = 100
+
+  [[http_service.checks]]
+    grace_period = "30s"
+    interval = "30s"
+    method = "GET"
+    path = "/v1/health"
+    timeout = "5s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "2gb"                  # the API plus the AI agent while it writes a summary

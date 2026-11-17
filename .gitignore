@@ -1,0 +1,19 @@
+# secrets: never commit these (copy the .env.example files instead)
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+intel_api/nginx/certs/*
+!intel_api/nginx/certs/.gitignore
+
+# local data and build output
+intel_api/data/
+*.sqlite*
+dist/
+
+# caches
+__pycache__/
+.ruff_cache/
+.DS_Store
+*.tmp

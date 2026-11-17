@@ -1,0 +1,665 @@
+{
+  "$comment": "What the folder scanners detect (projects, vendors, and secrets: kinds and places only, never values), shared by the Python scanner (scope_gen.py, scan_folders.py) and the Rust laptop scanner (scanner/), and served at GET /v1/scanner-rules. Regexes use the syntax both Python and Rust accept: no lookarounds or backreferences. Patterns are matched at the start of the text unless they say otherwise.",
+  "version": 3,
+  "skip_dirs": [
+    ".cache",
+    ".git",
+    ".next",
+    ".tox",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "vendor",
+    "venv"
+  ],
+  "project_skip_dirs": [
+    ".git",
+    ".next",
+    ".tox",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "vendor",
+    "venv"
+  ],
+  "file_signs": [
+    {
+      "glob": "railway.json",
+      "vendor": "Railway",
+      "type": "platform"
+    },
+    {
+      "glob": "railway.toml",
+      "vendor": "Railway",
+      "type": "platform"
+    },
+    {
+      "glob": "vercel.json",
+      "vendor": "Vercel",
+      "type": "platform"
+    },
+    {
+      "glob": "netlify.toml",
+      "vendor": "Netlify",
+      "type": "platform"
+    },
+    {
+      "glob": "fly.toml",
+      "vendor": "Fly.io",
+      "type": "platform"
+    },
+    {
+      "glob": "render.yaml",
+      "vendor": "Render",
+      "type": "platform"
+    },
+    {
+      "glob": "Procfile",
+      "vendor": "Heroku",
+      "type": "platform"
+    },
+    {
+      "glob": "app.json",
+      "vendor": "Heroku",
+      "type": "platform"
+    },
+    {
+      "glob": "serverless.yml",
+      "vendor": "AWS Lambda",
+      "type": "platform"
+    },
+    {
+      "glob": "serverless.yaml",
+      "vendor": "AWS Lambda",
+      "type": "platform"
+    },
+    {
+      "glob": "firebase.json",
+      "vendor": "Firebase",
+      "type": "platform"
+    },
+    {
+      "glob": "supabase/config.toml",
+      "vendor": "Supabase",
+      "type": "saas"
+    },
+    {
+      "glob": "wrangler.toml",
+      "vendor": "Cloudflare",
+      "type": "platform"
+    },
+    {
+      "glob": "cloudbuild.yaml",
+      "vendor": "Google Cloud Build",
+      "type": "ci"
+    },
+    {
+      "glob": ".github/workflows/*.y*ml",
+      "vendor": "GitHub Actions",
+      "type": "ci"
+    },
+    {
+      "glob": ".gitlab-ci.yml",
+      "vendor": "GitLab CI",
+      "type": "ci"
+    },
+    {
+      "glob": ".circleci/config.yml",
+      "vendor": "CircleCI",
+      "type": "ci"
+    },
+    {
+      "glob": "Jenkinsfile",
+      "vendor": "Jenkins",
+      "type": "ci"
+    },
+    {
+      "glob": "azure-pipelines.yml",
+      "vendor": "Azure Pipelines",
+      "type": "ci"
+    },
+    {
+      "glob": "bitbucket-pipelines.yml",
+      "vendor": "Bitbucket Pipelines",
+      "type": "ci"
+    },
+    {
+      "glob": ".travis.yml",
+      "vendor": "Travis CI",
+      "type": "ci"
+    },
+    {
+      "glob": ".buildkite/*",
+      "vendor": "Buildkite",
+      "type": "ci"
+    },
+    {
+      "glob": ".claude/*",
+      "vendor": "Claude Code",
+      "type": "developer_tool"
+    },
+    {
+      "glob": "CLAUDE.md",
+      "vendor": "Claude Code",
+      "type": "developer_tool"
+    },
+    {
+      "glob": ".cursor/*",
+      "vendor": "Cursor",
+      "type": "developer_tool"
+    },
+    {
+      "glob": ".cursorrules",
+      "vendor": "Cursor",
+      "type": "developer_tool"
+    },
+    {
+      "glob": "opencode.json",
+      "vendor": "OpenCode",
+      "type": "developer_tool"
+    },
+    {
+      "glob": ".opencode/*",
+      "vendor": "OpenCode",
+      "type": "developer_tool"
+    },
+    {
+      "glob": ".windsurfrules",
+      "vendor": "Windsurf",
+      "type": "developer_tool"
+    },
+    {
+      "glob": ".github/copilot-instructions.md",
+      "vendor": "GitHub Copilot",
+      "type": "developer_tool"
+    },
+    {
+      "glob": ".aider.conf.yml",
+      "vendor": "Aider",
+      "type": "developer_tool"
+    }
+  ],
+  "terraform_providers": {
+    "aws": "AWS",
+    "google": "Google Cloud",
+    "azurerm": "Azure",
+    "cloudflare": "Cloudflare",
+    "digitalocean": "DigitalOcean",
+    "vercel": "Vercel",
+    "heroku": "Heroku",
+    "datadog": "Datadog"
+  },
+  "package_vendors": [
+    {
+      "pattern": "^(openai|@openai/.*|langchain-openai)$",
+      "vendor": "OpenAI",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "^(anthropic|@anthropic-ai/.*|langchain-anthropic)$",
+      "vendor": "Anthropic",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "^(google-generativeai|google-genai|@google/generative-ai|@google/genai)$",
+      "vendor": "Google Gemini",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "^(mistralai|@mistralai/.*)$",
+      "vendor": "Mistral",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "^(cohere|cohere-ai)$",
+      "vendor": "Cohere",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "^(groq|groq-sdk)$",
+      "vendor": "Groq",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "^replicate$",
+      "vendor": "Replicate",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "^(together|together-ai)$",
+      "vendor": "Together AI",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "^(huggingface[-_]hub|@huggingface/.*)$",
+      "vendor": "Hugging Face",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "^(stripe|@stripe/.*)$",
+      "vendor": "Stripe",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(sentry-sdk|@sentry/.*)$",
+      "vendor": "Sentry",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(twilio)$",
+      "vendor": "Twilio",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(sendgrid|@sendgrid/.*)$",
+      "vendor": "SendGrid",
+      "type": "saas"
+    },
+    {
+      "pattern": "^resend$",
+      "vendor": "Resend",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(posthog|posthog-js|posthog-node)$",
+      "vendor": "PostHog",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(ddtrace|dd-trace|datadog)$",
+      "vendor": "Datadog",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(newrelic)$",
+      "vendor": "New Relic",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(supabase|@supabase/.*)$",
+      "vendor": "Supabase",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(firebase|firebase-admin)$",
+      "vendor": "Firebase",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(@clerk/.*|clerk-backend-api)$",
+      "vendor": "Clerk",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(auth0|auth0-python|@auth0/.*)$",
+      "vendor": "Auth0",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(algoliasearch)$",
+      "vendor": "Algolia",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(pinecone|pinecone-client|@pinecone-database/.*)$",
+      "vendor": "Pinecone",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(slack[-_]sdk|@slack/.*)$",
+      "vendor": "Slack",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(boto3|botocore|aws-sdk|@aws-sdk/.*)$",
+      "vendor": "AWS",
+      "type": "platform"
+    },
+    {
+      "pattern": "^(google-cloud-.*|@google-cloud/.*)$",
+      "vendor": "Google Cloud",
+      "type": "platform"
+    },
+    {
+      "pattern": "^(azure-.*|@azure/.*)$",
+      "vendor": "Azure",
+      "type": "platform"
+    },
+    {
+      "pattern": "^(@vercel/.*)$",
+      "vendor": "Vercel",
+      "type": "platform"
+    },
+    {
+      "pattern": "^(launchdarkly-.*|@launchdarkly/.*)$",
+      "vendor": "LaunchDarkly",
+      "type": "saas"
+    },
+    {
+      "pattern": "^(mixpanel|mixpanel-browser)$",
+      "vendor": "Mixpanel",
+      "type": "saas"
+    }
+  ],
+  "env_prefixes": [
+    {
+      "pattern": "OPENAI_",
+      "vendor": "OpenAI",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "ANTHROPIC_|CLAUDE_API",
+      "vendor": "Anthropic",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "GEMINI_|GOOGLE_AI_",
+      "vendor": "Google Gemini",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "MISTRAL_",
+      "vendor": "Mistral",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "COHERE_",
+      "vendor": "Cohere",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "GROQ_",
+      "vendor": "Groq",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "HF_|HUGGINGFACE",
+      "vendor": "Hugging Face",
+      "type": "ai_provider"
+    },
+    {
+      "pattern": "AWS_",
+      "vendor": "AWS",
+      "type": "platform"
+    },
+    {
+      "pattern": "(GOOGLE_|GCP_|GCLOUD_)",
+      "vendor": "Google Cloud",
+      "type": "platform"
+    },
+    {
+      "pattern": "AZURE_",
+      "vendor": "Azure",
+      "type": "platform"
+    },
+    {
+      "pattern": "STRIPE_",
+      "vendor": "Stripe",
+      "type": "saas"
+    },
+    {
+      "pattern": "SENTRY_",
+      "vendor": "Sentry",
+      "type": "saas"
+    },
+    {
+      "pattern": "TWILIO_",
+      "vendor": "Twilio",
+      "type": "saas"
+    },
+    {
+      "pattern": "SENDGRID_",
+      "vendor": "SendGrid",
+      "type": "saas"
+    },
+    {
+      "pattern": "SUPABASE_",
+      "vendor": "Supabase",
+      "type": "saas"
+    },
+    {
+      "pattern": "FIREBASE_",
+      "vendor": "Firebase",
+      "type": "saas"
+    },
+    {
+      "pattern": "(DATADOG_|DD_)",
+      "vendor": "Datadog",
+      "type": "saas"
+    },
+    {
+      "pattern": "SLACK_",
+      "vendor": "Slack",
+      "type": "saas"
+    },
+    {
+      "pattern": "PINECONE_",
+      "vendor": "Pinecone",
+      "type": "saas"
+    },
+    {
+      "pattern": "RESEND_",
+      "vendor": "Resend",
+      "type": "saas"
+    },
+    {
+      "pattern": "CLERK_",
+      "vendor": "Clerk",
+      "type": "saas"
+    },
+    {
+      "pattern": "(GITHUB_|GH_)",
+      "vendor": "GitHub",
+      "type": "saas"
+    },
+    {
+      "pattern": "RAILWAY_",
+      "vendor": "Railway",
+      "type": "platform"
+    },
+    {
+      "pattern": "VERCEL_",
+      "vendor": "Vercel",
+      "type": "platform"
+    },
+    {
+      "pattern": "(CLOUDFLARE_|CF_)",
+      "vendor": "Cloudflare",
+      "type": "platform"
+    },
+    {
+      "pattern": "FLY_",
+      "vendor": "Fly.io",
+      "type": "platform"
+    },
+    {
+      "pattern": "HEROKU_",
+      "vendor": "Heroku",
+      "type": "platform"
+    },
+    {
+      "pattern": "FASTAPI_CLOUD_",
+      "vendor": "FastAPI Cloud",
+      "type": "platform"
+    },
+    {
+      "pattern": "(NETLIFY_)",
+      "vendor": "Netlify",
+      "type": "platform"
+    },
+    {
+      "pattern": "(RENDER_)",
+      "vendor": "Render",
+      "type": "platform"
+    },
+    {
+      "pattern": "(SNYK_)",
+      "vendor": "Snyk",
+      "type": "saas"
+    },
+    {
+      "pattern": "(CODECOV_)",
+      "vendor": "Codecov",
+      "type": "saas"
+    },
+    {
+      "pattern": "(SONAR_)",
+      "vendor": "SonarCloud",
+      "type": "saas"
+    },
+    {
+      "pattern": "(PYPI_|TWINE_)",
+      "vendor": "PyPI",
+      "type": "package_registry"
+    },
+    {
+      "pattern": "NPM_",
+      "vendor": "npm",
+      "type": "package_registry"
+    },
+    {
+      "pattern": "DOCKER(HUB)?_",
+      "vendor": "Docker Hub",
+      "type": "package_registry"
+    }
+  ],
+  "secretish": "(KEY|TOKEN|SECRET|PASSWORD|PASSWD|PASS|DSN|CREDENTIAL|PRIVATE|AUTH|_URL|_URI|CONN)",
+  "not_secret": "^(NODE_ENV|PATH|HOME|PORT|HOST|DEBUG|LOG_LEVEL|ENV|ENVIRONMENT|PYTHONPATH|TZ|CI|PUBLIC_URL|BASE_URL|FRONTEND_URL|API_URL)$",
+  "registry_hosts": [
+    {
+      "pattern": "^ghcr\\.io/",
+      "vendor": "GitHub Container Registry"
+    },
+    {
+      "pattern": "\\.dkr\\.ecr\\.[^/]+\\.amazonaws\\.com/",
+      "vendor": "AWS ECR"
+    },
+    {
+      "pattern": "^(gcr\\.io|[a-z0-9-]+-docker\\.pkg\\.dev)/",
+      "vendor": "Google Artifact Registry"
+    },
+    {
+      "pattern": "^mcr\\.microsoft\\.com/",
+      "vendor": "Microsoft Container Registry"
+    },
+    {
+      "pattern": "^quay\\.io/",
+      "vendor": "Quay"
+    },
+    {
+      "pattern": "^public\\.ecr\\.aws/",
+      "vendor": "AWS Public ECR"
+    },
+    {
+      "pattern": "^cgr\\.dev/",
+      "vendor": "Chainguard"
+    }
+  ],
+  "secret_patterns": [
+    {
+      "kind": "Anthropic API key",
+      "severity": "CRITICAL",
+      "pattern": "sk-ant-(?:api|admin)\\d{2}-[A-Za-z0-9_\\-]{20,}"
+    },
+    {
+      "kind": "OpenAI API key",
+      "severity": "CRITICAL",
+      "pattern": "sk-(?:proj-|svcacct-)?[A-Za-z0-9_\\-]{30,}"
+    },
+    {
+      "kind": "Google API key",
+      "severity": "HIGH",
+      "pattern": "AIza[0-9A-Za-z_\\-]{30,}"
+    },
+    {
+      "kind": "AWS access key ID",
+      "severity": "CRITICAL",
+      "pattern": "\\b(?:AKIA|ASIA)[0-9A-Z]{16}\\b"
+    },
+    {
+      "kind": "AWS secret access key",
+      "severity": "CRITICAL",
+      "pattern": "(?i)aws_secret_access_key\\s*[=:]\\s*['\\\"]?[A-Za-z0-9/+]{40}"
+    },
+    {
+      "kind": "GitHub token",
+      "severity": "CRITICAL",
+      "pattern": "\\b(?:ghp|gho|ghs|ghu|github_pat)_[A-Za-z0-9_]{30,}"
+    },
+    {
+      "kind": "Hugging Face token",
+      "severity": "HIGH",
+      "pattern": "\\bhf_[A-Za-z0-9]{30,}"
+    },
+    {
+      "kind": "Stripe secret key",
+      "severity": "CRITICAL",
+      "pattern": "(?:sk|rk)_live_[A-Za-z0-9]{24,}"
+    },
+    {
+      "kind": "Database URL with password",
+      "severity": "HIGH",
+      "pattern": "\\b(?:postgres|postgresql|mysql|mongodb(?:\\+srv)?)://[^:\\s/]+:[^@\\s]+@[^\\s'\\\"]+"
+    },
+    {
+      "kind": "Private key",
+      "severity": "CRITICAL",
+      "pattern": "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"
+    }
+  ],
+  "secret_placeholder": "(?i)example|dummy|fake|placeholder|xxxx",
+  "secret_skip_dirs": [
+    ".git",
+    "node_modules",
+    "__pycache__",
+    ".venv",
+    "venv"
+  ],
+  "import_aliases": {
+    "$comment": "Python modules whose import name is not their PyPI name (import name -> PyPI name). Without an entry the names are compared as they are, after lowercasing and treating - _ . alike, and without a python-/py- prefix or -python/-py suffix. Used by the scanners to tell whether a dependency is used (imported, or started by a run command).",
+    "yaml": "pyyaml",
+    "pil": "pillow",
+    "sklearn": "scikit-learn",
+    "skimage": "scikit-image",
+    "bs4": "beautifulsoup4",
+    "dateutil": "python-dateutil",
+    "jwt": "pyjwt",
+    "cv2": "opencv-python",
+    "dotenv": "python-dotenv",
+    "jose": "python-jose",
+    "magic": "python-magic",
+    "multipart": "python-multipart",
+    "docx": "python-docx",
+    "pptx": "python-pptx",
+    "attr": "attrs",
+    "google": "google-api-core",
+    "googleapiclient": "google-api-python-client",
+    "crypto": "pycryptodome",
+    "cryptodome": "pycryptodomex",
+    "openssl": "pyopenssl",
+    "nacl": "pynacl",
+    "serial": "pyserial",
+    "usb": "pyusb",
+    "zmq": "pyzmq",
+    "git": "gitpython",
+    "mysqldb": "mysqlclient",
+    "psycopg2": "psycopg2-binary",
+    "pkg_resources": "setuptools",
+    "fitz": "pymupdf",
+    "win32api": "pywin32",
+    "slugify": "python-slugify",
+    "socketio": "python-socketio",
+    "engineio": "python-engineio",
+    "telegram": "python-telegram-bot",
+    "discord": "discord.py",
+    "ldap": "python-ldap",
+    "levenshtein": "python-levenshtein",
+    "markdown_it": "markdown-it-py"
+  }
+}

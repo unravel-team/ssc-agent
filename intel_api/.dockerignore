@@ -1,0 +1,19 @@
+# What the image gets: the API code, its config and the dependency files. Never secrets, data or deploy files.
+data/
+.env
+.env.*
+nginx/
+agents/Dockerfile
+agents/fly.toml
+agents/.dockerignore
+agents/__pycache__/
+compose.yaml
+fly.toml
+FLY.md
+fly-secrets.sh
+Dockerfile.fly
+Dockerfile
+.dockerignore
+**/__pycache__/
+**/*.pyc
+.ruff_cache/

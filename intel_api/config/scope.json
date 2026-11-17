@@ -1,0 +1,612 @@
+{
+  "$comment": "What the sources API tracks. Background collection covers only these; feeds keep only records about them. Seeded from the acme-chat and fastapi-template repos on 2026-11-05; add packages, vendors, stack and CAs here. versions: [] = latest. Re-read on every job run.",
+  "packages": [
+    {
+      "package_manager": "npm",
+      "name": "@acme/internal-utils",
+      "versions": [
+        "1.0.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@biomejs/biome",
+      "versions": [
+        "2.6.3"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@hey-api/openapi-ts",
+      "versions": [
+        "0.97.3"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@hookform/resolvers",
+      "versions": [
+        "6.0.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@playwright/test",
+      "versions": [
+        "1.64.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-avatar",
+      "versions": [
+        "1.3.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-checkbox",
+      "versions": [
+        "1.4.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-dialog",
+      "versions": [
+        "1.3.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-dropdown-menu",
+      "versions": [
+        "2.2.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-label",
+      "versions": [
+        "2.1.17"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-radio-group",
+      "versions": [
+        "1.5.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-scroll-area",
+      "versions": [
+        "1.4.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-select",
+      "versions": [
+        "2.4.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-separator",
+      "versions": [
+        "1.2.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-slot",
+      "versions": [
+        "1.2.4"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-tabs",
+      "versions": [
+        "1.2.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@radix-ui/react-tooltip",
+      "versions": [
+        "1.4.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@react-email/components",
+      "versions": [
+        "1.0.12"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@react-email/ui",
+      "versions": [
+        "6.11.3"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@tailwindcss/vite",
+      "versions": [
+        "4.3.3"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@tanstack/react-query",
+      "versions": [
+        "5.105.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@tanstack/react-query-devtools",
+      "versions": [
+        "5.105.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@tanstack/react-router",
+      "versions": [
+        "1.170.46"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@tanstack/react-router-devtools",
+      "versions": [
+        "1.167.2"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@tanstack/react-table",
+      "versions": [
+        "9.3.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@tanstack/router-devtools",
+      "versions": [
+        "1.167.2"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@tanstack/router-plugin",
+      "versions": [
+        "1.168.48"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@types/node",
+      "versions": [
+        "26.6.5"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@types/react",
+      "versions": [
+        "19.3.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@types/react-dom",
+      "versions": [
+        "19.3.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "@vitejs/plugin-react-swc",
+      "versions": [
+        "4.3.3"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "axios",
+      "versions": [
+        "0.21.0",
+        "1.20.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "class-variance-authority",
+      "versions": [
+        "0.7.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "clsx",
+      "versions": [
+        "2.1.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "dotenv",
+      "versions": [
+        "18.0.9"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "express",
+      "versions": [
+        "4.17.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "form-data",
+      "versions": [
+        "4.0.6"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "loadsh",
+      "versions": [
+        "4.17.21"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "lodash",
+      "versions": [
+        "4.17.15"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "lucide-react",
+      "versions": [
+        "1.62.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "minimist",
+      "versions": [
+        "1.2.5"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "react",
+      "versions": [
+        "19.3.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "react-dom",
+      "versions": [
+        "19.3.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "react-email",
+      "versions": [
+        "6.11.3"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "react-error-boundary",
+      "versions": [
+        "6.1.6"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "react-hook-form",
+      "versions": [
+        "7.91.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "react-icons",
+      "versions": [
+        "5.7.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "react-secure-auth-helperz",
+      "versions": [
+        "2.0.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "sonner",
+      "versions": [
+        "2.0.8"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "tailwind-merge",
+      "versions": [
+        "3.7.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "tailwindcss",
+      "versions": [
+        "4.2.1"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "tw-animate-css",
+      "versions": [
+        "1.4.0"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "typescript",
+      "versions": [
+        "6.0.3"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "vite",
+      "versions": [
+        "8.3.5"
+      ]
+    },
+    {
+      "package_manager": "npm",
+      "name": "zod",
+      "versions": [
+        "3.23.8",
+        "4.6.7"
+      ]
+    },
+    {
+      "package_manager": "pip",
+      "name": "acme-internal-utils",
+      "versions": [
+        "1.0.0"
+      ]
+    },
+    {
+      "package_manager": "pip",
+      "name": "alembic",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "coverage",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "email-validator",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "emails",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "fastapi",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "flask",
+      "versions": [
+        "2.0.1"
+      ]
+    },
+    {
+      "package_manager": "pip",
+      "name": "httpx",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "jinja2",
+      "versions": [
+        "2.11.2"
+      ]
+    },
+    {
+      "package_manager": "pip",
+      "name": "litellm",
+      "versions": [
+        "1.107.0"
+      ]
+    },
+    {
+      "package_manager": "pip",
+      "name": "mypy",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "openai-agent-toolkitz",
+      "versions": [
+        "0.3.1"
+      ]
+    },
+    {
+      "package_manager": "pip",
+      "name": "prek",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "psycopg",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "pwdlib",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "pydantic",
+      "versions": [
+        "2.9.2"
+      ]
+    },
+    {
+      "package_manager": "pip",
+      "name": "pydantic-settings",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "pyjwt",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "pytest",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "python-multipart",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "pyyaml",
+      "versions": [
+        "5.3"
+      ]
+    },
+    {
+      "package_manager": "pip",
+      "name": "reqeusts",
+      "versions": [
+        "2.31.0"
+      ]
+    },
+    {
+      "package_manager": "pip",
+      "name": "requests",
+      "versions": [
+        "2.19.1"
+      ]
+    },
+    {
+      "package_manager": "pip",
+      "name": "ruff",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "sentry-sdk",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "smokeshow",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "sqlmodel",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "ty",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "typer",
+      "versions": []
+    },
+    {
+      "package_manager": "pip",
+      "name": "zizmor",
+      "versions": []
+    }
+  ],
+  "vendors": [
+    {
+      "name": "AWS ECS",
+      "aliases": [
+        "Amazon ECS"
+      ]
+    },
+    {
+      "name": "Claude Code",
+      "aliases": [
+        "Claude"
+      ]
+    },
+    {
+      "name": "FastAPI Cloud",
+      "aliases": [
+        "FastAPI"
+      ]
+    },
+    {
+      "name": "GitHub Actions",
+      "aliases": []
+    },
+    {
+      "name": "Microsoft Container Registry",
+      "aliases": []
+    },
+    {
+      "name": "OpenCode Console",
+      "aliases": [
+        "OpenCode"
+      ]
+    },
+    {
+      "name": "Railway",
+      "aliases": [
+        "Railway.app"
+      ]
+    },
+    {
+      "name": "Sentry",
+      "aliases": []
+    }
+  ],
+  "stack": [
+    "bun",
+    "playwright",
+    "python"
+  ],
+  "certificate_authorities": [
+    "eMudhra Technologies Limited"
+  ]
+}

@@ -1,0 +1,453 @@
+{
+  "$comment": "Threat-intel sources for the agent suite. Edit 'enabled', 'speed' (scheduled feeds), feeds and tags here; no code changes needed. 'label' must match the name the connector reports. Sources with \"connector\": null are catalogued but not wired up yet.",
+  "version": 1,
+  "reliability_scale": {
+    "5": "Act on it directly",
+    "4": "Trustworthy; occasional gaps or delays",
+    "3": "Good signal; confirm before acting",
+    "2": "Lead only",
+    "1": "Noise-prone; never act on alone"
+  },
+  "policy": {
+    "block_min_reliability": 5,
+    "hold_min_reliability": 3,
+    "below_hold": "trigger a check against higher-reliability sources; never changes a verdict on its own"
+  },
+  "speeds": {
+    "$comment": "How often scheduled feeds are pulled. Each feed in 'sources' names one ('speed'); default regular. Other sources are asked on request or by the search jobs in 'collection'.",
+    "urgent": 600,
+    "regular": 3600,
+    "slow": 86400
+  },
+  "sources": {
+    "cve_list_v5": {
+      "label": "CVE List V5",
+      "category": "cve",
+      "enabled": false,
+      "connector": null,
+      "shows": "Official CVE ID, description, affected products, references",
+      "reliability": 5,
+      "may_block": true,
+      "latency": "minutes",
+      "url": "https://github.com/CVEProject/cvelistV5",
+      "auth_env": null
+    },
+    "nvd": {
+      "label": "NVD",
+      "category": "cve",
+      "enabled": true,
+      "connector": "nvd_search",
+      "shows": "CVE plus CVSS score, affected-product list (CPE), weakness type (CWE)",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "hours to weeks (enrichment backlog)",
+      "url": "https://services.nvd.nist.gov/rest/json/cves/2.0",
+      "auth_env": "NVD_API_KEY",
+      "auth_required": false
+    },
+    "cisa_vulnrichment": {
+      "label": "CISA Vulnrichment",
+      "category": "cve",
+      "enabled": false,
+      "connector": null,
+      "shows": "CVSS and SSVC priority added by CISA to new CVEs",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "days",
+      "url": "https://github.com/cisagov/vulnrichment",
+      "auth_env": null
+    },
+    "euvd": {
+      "label": "EUVD",
+      "category": "cve",
+      "enabled": false,
+      "connector": null,
+      "shows": "EU vulnerability database (ENISA): CVEs plus EU vendor and CSIRT data",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "hours to days",
+      "url": "https://euvd.enisa.europa.eu/",
+      "auth_env": null
+    },
+    "osv": {
+      "label": "OSV",
+      "category": "package_vulns",
+      "enabled": true,
+      "connector": "osv_batch",
+      "shows": "Exact affected and fixed versions per package; includes MAL- malicious-package entries",
+      "reliability": 5,
+      "may_block": true,
+      "latency": "minutes to hours",
+      "url": "https://api.osv.dev/v1/query",
+      "auth_env": null,
+      "speed": "urgent"
+    },
+    "ghsa": {
+      "label": "GitHub Advisory DB",
+      "category": "package_vulns",
+      "enabled": false,
+      "disabled_reason": "paused until a GITHUB_TOKEN is available (unauthenticated GitHub API allows 60 requests/hour); OSV still carries GitHub advisories and OpenSSF MAL- entries",
+      "connector": "ghsa",
+      "shows": "Reviewed advisories and malware advisories for npm and PyPI",
+      "reliability": 5,
+      "may_block": true,
+      "latency": "hours",
+      "url": "https://api.github.com/advisories",
+      "auth_env": "GITHUB_TOKEN",
+      "auth_required": false
+    },
+    "pypa_advisory_db": {
+      "label": "PyPA advisory-db",
+      "category": "package_vulns",
+      "enabled": false,
+      "connector": null,
+      "shows": "Python community advisories (already merged into OSV)",
+      "reliability": 5,
+      "may_block": true,
+      "latency": "hours",
+      "url": "https://github.com/pypa/advisory-database",
+      "auth_env": null
+    },
+    "oss_index": {
+      "label": "Sonatype OSS Index",
+      "category": "package_vulns",
+      "enabled": false,
+      "connector": null,
+      "shows": "Package-to-vulnerability lookup",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "daily",
+      "url": "https://ossindex.sonatype.org/",
+      "auth_env": "OSS_INDEX_TOKEN",
+      "auth_required": true
+    },
+    "ossf_malicious_packages": {
+      "label": "OpenSSF Malicious Packages",
+      "category": "malicious_packages",
+      "enabled": false,
+      "disabled_reason": "paused until a GITHUB_TOKEN is available (unauthenticated GitHub API allows 60 requests/hour); OSV still carries GitHub advisories and OpenSSF MAL- entries",
+      "connector": "ossf_malicious",
+      "shows": "Confirmed malicious npm/PyPI packages in OSV format (also served through OSV as MAL- IDs)",
+      "reliability": 5,
+      "may_block": true,
+      "latency": "hours",
+      "url": "https://api.github.com/repos/ossf/malicious-packages/contents/osv/malicious/",
+      "auth_env": "GITHUB_TOKEN",
+      "auth_required": false
+    },
+    "vendor_research": {
+      "label": "Vendor research blogs",
+      "category": "malicious_packages",
+      "enabled": false,
+      "connector": null,
+      "shows": "Early analysis of new package attacks (Socket, Aikido, Wiz, StepSecurity, ReversingLabs, Checkmarx, Snyk)",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "hours",
+      "feeds": {
+        "Socket": "https://socket.dev/api/blog/feed.atom",
+        "Aikido": "https://www.aikido.dev/blog/rss.xml",
+        "StepSecurity": "https://www.stepsecurity.io/blog/rss.xml"
+      }
+    },
+    "cisa_kev": {
+      "label": "CISA KEV",
+      "category": "exploitation",
+      "enabled": true,
+      "connector": "kev",
+      "shows": "CVEs proven exploited in the wild",
+      "reliability": 5,
+      "may_block": true,
+      "latency": "days",
+      "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+      "auth_env": null,
+      "speed": "regular"
+    },
+    "vulncheck_kev": {
+      "label": "VulnCheck KEV",
+      "category": "exploitation",
+      "enabled": true,
+      "connector": "vulncheck_kev",
+      "shows": "Exploited CVEs, broader and earlier than CISA KEV",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "hours to days",
+      "url": "https://api.vulncheck.com/v3/index/vulncheck-kev",
+      "auth_env": "VULNCHECK_API_KEY",
+      "auth_required": true
+    },
+    "epss": {
+      "label": "FIRST EPSS",
+      "category": "exploitation",
+      "enabled": true,
+      "connector": "epss",
+      "shows": "Daily probability (0-100%) a CVE is exploited in the next 30 days",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "daily",
+      "url": "https://api.first.org/data/v1/epss",
+      "auth_env": null
+    },
+    "exploit_db": {
+      "label": "Exploit-DB",
+      "category": "exploitation",
+      "enabled": false,
+      "connector": null,
+      "shows": "Public exploit code exists",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "days",
+      "url": "https://gitlab.com/exploit-database/exploitdb",
+      "auth_env": null
+    },
+    "vendor_csaf": {
+      "label": "Vendor CSAF feeds",
+      "category": "vendor",
+      "enabled": false,
+      "connector": null,
+      "shows": "Affected vendor products and fixes (Microsoft, Red Hat, Cisco, Oracle, Siemens)",
+      "reliability": 5,
+      "may_block": true,
+      "latency": "same day as vendor release",
+      "providers": {
+        "Red Hat": "https://security.access.redhat.com/data/csaf/v2/provider-metadata.json",
+        "Microsoft": "https://msrc.microsoft.com/csaf/provider-metadata.json",
+        "Cisco": "https://www.cisco.com/.well-known/csaf/provider-metadata.json"
+      }
+    },
+    "distro_trackers": {
+      "label": "Linux distro trackers",
+      "category": "vendor",
+      "enabled": false,
+      "connector": null,
+      "shows": "Fixed package versions per distro release (for container images)",
+      "reliability": 5,
+      "may_block": true,
+      "latency": "hours to days",
+      "providers": {
+        "Debian": "https://security-tracker.debian.org/tracker/data/json",
+        "Ubuntu": "https://ubuntu.com/security/notices.json",
+        "Alpine": "https://secdb.alpinelinux.org/"
+      }
+    },
+    "oss_security": {
+      "label": "oss-security mailing list",
+      "category": "early_warning",
+      "enabled": true,
+      "connector": "oss_security",
+      "shows": "Maintainer disclosures, often before a CVE exists",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "minutes to hours",
+      "url": "https://seclists.org/rss/oss-sec.rss",
+      "archive": "https://www.openwall.com/lists/oss-security/",
+      "speed": "urgent"
+    },
+    "news_rss": {
+      "label": "News",
+      "category": "news",
+      "enabled": true,
+      "connector": "news_feeds",
+      "shows": "Breach and attack coverage",
+      "reliability": 3,
+      "may_block": false,
+      "latency": "hours",
+      "feeds": {
+        "The Hacker News": "https://feeds.feedburner.com/TheHackersNews",
+        "BleepingComputer": "https://www.bleepingcomputer.com/feed/",
+        "Help Net Security": "https://www.helpnetsecurity.com/feed/",
+        "CISA advisories": "https://www.cisa.gov/cybersecurity-advisories/all.xml",
+        "Reddit r/netsec": "https://www.reddit.com/r/netsec/new/.rss",
+        "Lobsters security": "https://lobste.rs/t/security.rss"
+      },
+      "feed_reliability": {
+        "CISA advisories": 5,
+        "Reddit r/netsec": 2,
+        "Lobsters security": 2
+      },
+      "speed": "regular"
+    },
+    "google_news": {
+      "label": "News: Google News",
+      "category": "news",
+      "enabled": true,
+      "connector": "google_news",
+      "shows": "Keyword news search across outlets",
+      "reliability": 3,
+      "may_block": false,
+      "latency": "hours",
+      "url": "https://news.google.com/rss/search"
+    },
+    "hacker_news": {
+      "label": "Social: Hacker News",
+      "category": "social",
+      "enabled": true,
+      "connector": "social_hn",
+      "shows": "Community discussion and first reports",
+      "reliability": 2,
+      "may_block": false,
+      "latency": "minutes",
+      "url": "https://hn.algolia.com/api/v1/search"
+    },
+    "github_issues": {
+      "label": "Social: GitHub issues",
+      "category": "social",
+      "enabled": false,
+      "disabled_reason": "paused until a GITHUB_TOKEN is available (unauthenticated GitHub API allows 60 requests/hour); OSV still carries GitHub advisories and OpenSSF MAL- entries",
+      "connector": "social_github",
+      "shows": "Issues reporting compromised or malicious releases",
+      "reliability": 2,
+      "may_block": false,
+      "latency": "minutes",
+      "url": "https://api.github.com/search/issues",
+      "auth_env": "GITHUB_TOKEN",
+      "auth_required": false
+    },
+    "mastodon": {
+      "label": "Social: Mastodon",
+      "category": "social",
+      "enabled": true,
+      "connector": "social_mastodon_pool",
+      "shows": "Security researchers posting live (hashtag timelines)",
+      "reliability": 2,
+      "may_block": false,
+      "latency": "minutes",
+      "url": "https://mastodon.social/api/v1/timelines/tag/",
+      "tags": [
+        "infosec",
+        "cybersecurity",
+        "supplychain",
+        "supplychainsecurity",
+        "malware",
+        "security"
+      ]
+    },
+    "bluesky": {
+      "label": "Social: Bluesky",
+      "category": "social",
+      "enabled": true,
+      "connector": "social_bluesky",
+      "shows": "Security researchers posting live (search)",
+      "reliability": 2,
+      "may_block": false,
+      "latency": "minutes",
+      "url": "https://bsky.social/xrpc/app.bsky.feed.searchPosts",
+      "auth_env": [
+        "BSKY_HANDLE",
+        "BSKY_APP_PASSWORD"
+      ],
+      "auth_required": true
+    },
+    "x": {
+      "label": "Social: X",
+      "category": "social",
+      "enabled": true,
+      "connector": "social_x",
+      "shows": "Fastest chatter about breaches and malicious packages",
+      "reliability": 1,
+      "may_block": false,
+      "latency": "minutes",
+      "url": "https://api.x.com/2/tweets/search/recent",
+      "auth_env": "X_BEARER_TOKEN",
+      "auth_required": true
+    },
+    "top_pypi": {
+      "label": "Top PyPI (hugovk)",
+      "category": "reference",
+      "enabled": true,
+      "connector": "popular",
+      "shows": "Most-downloaded PyPI packages (typosquat baseline)",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "monthly",
+      "url": "https://hugovk.github.io/top-pypi-packages/top-pypi-packages-30-days.min.json"
+    },
+    "top_npm": {
+      "label": "Top npm (npm-high-impact)",
+      "category": "reference",
+      "enabled": true,
+      "connector": "popular",
+      "shows": "Most-depended-on npm packages (typosquat baseline)",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "weeks",
+      "url": "https://cdn.jsdelivr.net/npm/npm-high-impact/lib/top.js"
+    },
+    "npm_downloads": {
+      "label": "npm downloads",
+      "category": "reference",
+      "enabled": true,
+      "connector": "weekly_downloads",
+      "shows": "Weekly download counts for npm packages",
+      "reliability": 5,
+      "may_block": false,
+      "latency": "daily",
+      "url": "https://api.npmjs.org/downloads/point/last-week/"
+    },
+    "pypi_downloads": {
+      "label": "PyPI downloads (pypistats)",
+      "category": "reference",
+      "enabled": true,
+      "connector": "weekly_downloads",
+      "shows": "Weekly download counts for PyPI packages",
+      "reliability": 4,
+      "may_block": false,
+      "latency": "daily",
+      "url": "https://pypistats.org/api/packages/"
+    },
+    "mozilla_ca_store": {
+      "label": "Mozilla CA store",
+      "category": "trust_store",
+      "enabled": true,
+      "connector": "mozilla_store",
+      "shows": "Currently trusted root certificates (to spot distrusted CAs)",
+      "reliability": 5,
+      "may_block": true,
+      "latency": "weeks",
+      "url": "https://curl.se/ca/cacert.pem",
+      "speed": "slow"
+    }
+  },
+  "collection": {
+    "$comment": "Background collection by the sources API (python3 -m intel_api serve). API calls only read what these jobs stored.",
+    "news_search": {
+      "enabled": true,
+      "vendors_every_seconds": 3600,
+      "packages_every_seconds": 21600,
+      "packages": "all",
+      "days": 45,
+      "max_terms_per_run": 25,
+      "$comment": "Google News searches per watched vendor/package/CA; packages: all | flagged (malware history or KEV)"
+    },
+    "social_search": {
+      "enabled": true,
+      "vendors_every_seconds": 3600,
+      "packages_every_seconds": 21600,
+      "packages": "all",
+      "days": 120,
+      "max_terms_per_run": 25
+    },
+    "nvd_search": {
+      "enabled": true,
+      "every_seconds": 21600,
+      "days": 120,
+      "max_terms_per_run": 8,
+      "$comment": "NVD keyword search for vendors and stack; slow without NVD_API_KEY (6.5 s per call)"
+    },
+    "package_evidence": {
+      "enabled": true,
+      "every_seconds": 21600,
+      "max_age_hours": 24,
+      "$comment": "registry, typosquat, OSV/KEV/EPSS/VulnCheck per watched package version; older than max_age_hours is not served"
+    },
+    "article_text": {
+      "enabled": true,
+      "max_per_run": 40,
+      "$comment": "read the article page (direct links only) once, to find package versions not in the headline"
+    },
+    "maintenance": {
+      "every_seconds": 86400,
+      "prune_days": 120
+    }
+  }
+}
