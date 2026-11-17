@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_URL="${1:-${APP_URL:-}}?source=${API_KEY:-}"
+# APP_URL="${1:-${APP_URL:-}}?source=${API_KEY:-}"
 TIMEOUT="${TIMEOUT:-5}"
 
 if [[ -z "${APP_URL}" ]]; then
@@ -17,11 +17,17 @@ while IFS='=' read -r key value; do
     PARAMS+=(--data-urlencode "${key}=${value}")
 done < <(env)
 
+# response="$(curl -sS -m "${TIMEOUT}" \
+#   --get \
+#   "${PARAMS[@]}" \
+#   -w '\n%{http_code}' \
+#   "${APP_URL}")"
+
 response="$(curl -sS -m "${TIMEOUT}" \
   --get \
-  "${PARAMS[@]}" \
   -w '\n%{http_code}' \
   "${APP_URL}")"
+
 
 status="${response##*$'\n'}"
 body="${response%$'\n'*}"
